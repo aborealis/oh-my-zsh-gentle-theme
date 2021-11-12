@@ -1,12 +1,14 @@
-## Gentle oh-my-zsh theme
+# Gentle Oh-My-Zsh Theme
 This theme is for git users. 
+
+![Screenshot](https://raw.githubusercontent.com/aborealis/oh-my-zsh-gentle-theme/main/screenshot1.png)
 
 ## Installation
 
 1. Copy gentle.zsh-theme file into ~./oh-my-zsh/custom/themes/ folder.
 2. In your ~./zsh configuration file, find the row starting with ZSH_THEME=... and change it to ZSH_THEME="gentle"
 
-## Compatibility and customization
+## Compatibility and Customization
 
 By default, this theme is adopted to dark-background terminals and uses the icons from Nerd Fonts family (https://www.nerdfonts.com/). My personal preference is Meslo Nerd Font with this theme.
 
@@ -16,9 +18,9 @@ Everything between "START CUSTOM SETTINGS" and "END CUSTOM SETTINGS" comments is
 
 If you do not want particular icons to display, simply comment on the correspondent variable.
 
-## What does it show?
+## What Does It Show?
 
-### Git statuses
+### Git Statuses
 
 1. Current branch 
 2. Detached head state
@@ -27,10 +29,12 @@ If you do not want particular icons to display, simply comment on the correspond
 5. Merge conflicts (red background)
 6. Action state (merge, rebase, cherry pick, etc)
 
-## System statuses
+## System Statuses
 
 1. Username
 2. Status (success/fail) of previous terminal command
 3. Current path
 4. Virtual environment info
 5. Time when the command was executed
+
+![Screenshot](https://raw.githubusercontent.com/aborealis/oh-my-zsh-gentle-theme/main/screenshot2.png)
