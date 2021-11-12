@@ -7,7 +7,7 @@ GIT_DIRTY_BG_COLOR=214
 GIT_CLEAR_BG_COLOR=70
 GIT_CONFLICT_BG_COLOR=88
 GREEN=73
-PATH_BG_COLOR="#303032"
+PATH_BG_COLOR=236
 PATH_FG_COLOR=250
 HOSTNAME_BG_COLOR=238
 HOSTNAME_FG_COLOR=214
@@ -28,7 +28,7 @@ TIME_ICON="\uE388"
 THREE_DOTS_ICON="\u2026"
 
 # Display settings
-SHOW_VIRTENV_NAME=false # Show/hide the name of current virt. env.
+SHOW_VIRTENV_NAME=true  # Show/hide the name of current virt. env.
 SHORTEN_PATH_BY=4       # Maximum subfolders to show in path
 #### END CUSTOM SETTINGS ####
 
@@ -51,7 +51,7 @@ function _git_prompt_info() {
     pointer=$DETACHED_ICON
   fi
 
-  stashes_count=$(git stash list | grep "stash" | wc -l)
+  stashes_count=$(git stash list | grep "stash" | wc -l | sed 's/ //g')
   if [[ $stashes_count != "0" ]]; then 
     stash_info=" $STASH_ICON $stashes_count"
   fi  
@@ -66,7 +66,7 @@ function _git_prompt() {
       FG_COLOR=black
     fi
 
-    if [[ $(git diff --name-only --diff-filter=AA --diff-filter=UU | wc -l) != "0" ]]; then
+    if [[ $(git diff --name-only --diff-filter=AA --diff-filter=UU | wc -l | sed 's/ //g') != "0" ]]; then
       BG_COLOR=$GIT_CONFLICT_BG_COLOR
       FG_COLOR=white
     fi
