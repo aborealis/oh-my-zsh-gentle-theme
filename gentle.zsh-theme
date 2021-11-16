@@ -92,7 +92,7 @@ function +vi-git_remote() {
     if (( $ahead )); then 
       gitstatus="+${ahead}/-${ahead}"
     elif (( $behind )); then 
-      gitstatus+="+${behind}/+${behind}/"
+      gitstatus+="-${behind}/+${behind}"
     fi
 
     [[ $gitstatus != "" ]] && hook_com[misc]+=" $GIT_REMOTE_ICON $remote $gitstatus"
