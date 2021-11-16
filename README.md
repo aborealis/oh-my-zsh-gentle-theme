@@ -28,6 +28,7 @@ If you do not want particular icons to display, simply comment on the correspond
 4. Stashes (and number of stashes)
 5. Merge conflicts (red background)
 6. Action state (merge, rebase, cherry pick, etc)
+7. Difference between current/remote branch (ahead/behind)
 
 ## System Statuses
 
