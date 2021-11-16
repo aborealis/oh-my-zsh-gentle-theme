@@ -1,38 +1,39 @@
 # Oh My Zsh Dark Git Theme by Alexey Borealis
 # Inspired by power10k and agnoster themes
-
+# Based on Zsh framework "vcs_info"
 
 #### START CUSTOM SETTINGS ####
 # Configure your colors
-GIT_DIRTY_BG=214
-GIT_DIRTY_FG=black
-GIT_CLEAR_BG=70
-GIT_CLEAR_FG=black
-GIT_CONFLICT_BG=88
-GIT_CONFLICT_FG=white
-PATH_BG=236
-PATH_FG=250
-USER_BG=238
-USER_FG=214
-VENV_FG=38
+GIT_DIRTY_BG=214        # Orange by default
+GIT_DIRTY_FG=black      # Black by default
+GIT_CLEAR_BG=70         # Fresh-green by default
+GIT_CLEAR_FG=black      # Black by default
+GIT_CONFLICT_BG=88      # Red by default
+GIT_CONFLICT_FG=white   # White by default
+PATH_BG=236             # Dark gray by default
+PATH_FG=250             # Light gray by default
+USER_BG=238             # Gray by default
+USER_FG=214             # Oragnge by default
+VENV_FG=38              # Light blue by default
 
 # Configure your symbols (default set requires Nerd Font family)
-SEPARATOR="\ue0b0"
-LEFT_ICON="\uE0B7"
-RIGHT_ICON="\uE0B5"
-GIT_DIRTY_ICON="\uF46A"
-GIT_BRANCH_ICON="\uFB2B"
-GIT_REMOTE_ICON="\uE0B1 \uF819"
-GIT_DETACHED_ICON="\uF064"
-GIT_STASH_ICON="\uF01C"
-FOLDER_ICON="\uF07c"
-VENV_ICON="\uF0A0"
-PROMPT_INVITE_ICON="\u276F"
-TIME_ICON="\uE388"
+SEPARATOR="\ue0b0"                # Triangle symbol by default
+LEFT_ICON="\uE0B7"                # Large parenthesis by default
+RIGHT_ICON="\uE0B5"               # Large parenthesis by default
+GIT_DIRTY_ICON="\uF46A"           # Sync icon by default
+GIT_BRANCH_ICON="\uFB2B"          # Branch icon by default
+GIT_REMOTE_ICON="\uE0B1 \uF819"   # Triangle separator and remote host icon 
+GIT_DETACHED_ICON="\uF064"        # Curved arrow by default
+GIT_STASH_ICON="\uF01C"           # Box icon by default
+FOLDER_ICON="\uF07c"              # Filled open folder icon
+VENV_ICON="\uF0A0"                # Server icon by default
+PROMPT_INVITE_ICON="\u276F"       # Right angle bracket
 
 # Display settings
-SHORTEN_PATH_BY=2       # Maximum subfolders to show in path
-TRANSIENT_PROMPT=true   # Display short version of prompt for executed commands
+SHORTEN_PATH_BY=2                 # Maximum subfolders to show in the path
+TRANSIENT_PROMPT=true             # Display short version of prompt next to already executed commands
+SHOW_REMOTE_BRANCH_NAME=false     # If "false" then displays the word "remote"
+SHOW_VIRT_ENV_NAME=false          # If "false" then displays the word "env"
 #### END CUSTOM SETTINGS ####
 
 export VIRTUAL_ENV_DISABLE_PROMPT=yes
@@ -79,10 +80,14 @@ function +vi-git_remote() {
     local ahead behind
     local gitstatus
 
-    remote=$(git rev-parse --verify ${loc_branch}@{upstream} --symbolic-full-name 2>/dev/null)
-    remote=${${remote}/refs\/remotes\/}
-    ahead=$(git rev-list ${loc_branch}@{upstream}..HEAD 2>/dev/null | wc -l)
-    behind=$(git rev-list HEAD..${loc_branch}@{upstream} 2>/dev/null | wc -l)
+    if $SHOW_REMOTE_BRANCH_NAME; then
+      remote=$(git rev-parse --verify ${loc_branch}@{upstream} --symbolic-full-name 2>/dev/null)
+      remote=${${remote}/refs\/remotes\/}
+    else
+      remote="remote"
+    fi
+    ahead=$(git rev-list ${loc_branch}@{upstream}..HEAD 2>/dev/null | wc -l | tr -d ' ')
+    behind=$(git rev-list HEAD..${loc_branch}@{upstream} 2>/dev/null | wc -l | tr -d ' ')
 
     if (( $ahead )); then 
       gitstatus="+${ahead}/-${ahead}"
@@ -122,7 +127,13 @@ function colorize_git_prompt() {
 # 2nd line of the prompt
 function new_line {
   local venv_info
-  [ $VIRTUAL_ENV ] && venv_info="%F{$VENV_FG}$VENV_ICON env %f"
+  local venv_name
+  if $SHOW_VIRT_ENV_NAME; then
+    venv_name=$(basename "$VIRTUAL_ENV")
+  else
+    venv_name="env"
+  fi
+  [ $VIRTUAL_ENV ] && venv_info="%F{$VENV_FG}$VENV_ICON $venv_name %f"
   echo $venv_info%F{green}$PROMPT_INVITE_ICON %f
 }
 
