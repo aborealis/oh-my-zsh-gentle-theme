@@ -3,7 +3,9 @@
 # Based on Zsh framework "vcs_info"
 
 #### START CUSTOM SETTINGS ####
-# Configure your colors
+# Configure your colors. Run the following command
+# for i in {0..255}; do printf "\e[48;5;${i}m%3d\e[0m " $i; if (( $i % 16 == 15 )); then echo; fi; done
+# to see available colors
 GIT_DIRTY_BG=214        # Orange by default
 GIT_DIRTY_FG=black      # Black by default
 GIT_CLEAR_BG=70         # Fresh-green by default
@@ -15,19 +17,21 @@ PATH_FG=250             # Light gray by default
 USER_BG=238             # Gray by default
 USER_FG=214             # Oragnge by default
 VENV_FG=38              # Light blue by default
+HOST_FG=75              # Ligh blue for the host name
 
 # Configure your symbols (default set requires Nerd Font family)
 SEPARATOR="\ue0b0"                # Triangle symbol by default
 LEFT_ICON="\uE0B7"                # Large parenthesis by default
 RIGHT_ICON="\uE0B5"               # Large parenthesis by default
 GIT_DIRTY_ICON="\uF46A"           # Sync icon by default
-GIT_BRANCH_ICON="\uFB2B"          # Branch icon by default
-GIT_REMOTE_ICON="\uE0B1 \uF819"   # Triangle separator and remote host icon 
+GIT_BRANCH_ICON="\uf418"          # Branch icon by default
+GIT_REMOTE_ICON="\uE0B1 \uf418"   # Triangle separator and remote host icon 
 GIT_DETACHED_ICON="\uF064"        # Curved arrow by default
 GIT_STASH_ICON="\uF01C"           # Box icon by default
 FOLDER_ICON="\uF07c"              # Filled open folder icon
 VENV_ICON="\uF0A0"                # Server icon by default
 PROMPT_INVITE_ICON="\u276F"       # Right angle bracket
+HOST_ICON="\uF450"                # Host icon
 
 # Display settings
 SHORTEN_PATH_BY=2                 # Maximum subfolders to show in the path
@@ -175,5 +179,6 @@ zle-line-finish() {
   fi
 }
 
-TIME="%F{green}[%*]%{%f%}"
-RPROMPT=$TIME
+HOST_NAME="%F{$HOST_FG}$(echo $HOST_ICON) %m%f"
+TIME="%F{green}[%*]%f"
+RPROMPT="$HOST_NAME $TIME"
